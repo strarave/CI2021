@@ -1,0 +1,17 @@
+\contentsline {part}{I\hspace {1em}Introduction}{2}{}%
+\contentsline {section}{\numberline {1}Computing Infrastructure}{2}{}%
+\contentsline {part}{II\hspace {1em}Hardware Infrastructures}{2}{}%
+\contentsline {section}{\numberline {2}Data Centers}{2}{}%
+\contentsline {subsection}{\numberline {2.1}Pros and cons}{2}{}%
+\contentsline {subsection}{\numberline {2.2}DCs ans WSCs}{3}{}%
+\contentsline {subsection}{\numberline {2.3}Architectural Overview of DCs and WCSs}{3}{}%
+\contentsline {subsection}{\numberline {2.4}Servers}{4}{}%
+\contentsline {part}{III\hspace {1em}Software Infrastructure}{4}{}%
+\contentsline {part}{IV\hspace {1em}Dependability}{4}{}%
+\contentsline {section}{\numberline {3}Intro}{4}{}%
+\contentsline {subsection}{\numberline {3.1}Failure Rate}{5}{}%
+\contentsline {paragraph}{Reliability as Weibull}{5}{}%
+\contentsline {paragraph}{Reliability as exponential}{6}{}%
+\contentsline {subsection}{\numberline {3.2}System level reliability}{6}{}%
+\contentsline {paragraph}{Extension of MTTF calculation to complex systems}{6}{}%
+\contentsline {subsection}{\numberline {3.3}Availability}{6}{}%
