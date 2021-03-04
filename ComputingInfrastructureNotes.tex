@@ -65,7 +65,7 @@
 				
 	\part{Software Infrastructure}
 	\part{Dependability}
-		\section{Intro}
+		\section{Probabilistic approach}
 			Dependability represents the \emph{availability performance} of a system. It encompasses 
 			\begin{itemize}
 				\item Reliability
@@ -76,18 +76,22 @@
 			Dependability is approached with a statistical/probabilistic POV due to the high human component in it.\\
 			Two functions describes the system: F(t) and f(t), respectively the cumulative function and the fault probabilistic distribution. The former represents the \emph{unreliability} of the system analyzed. So, we can define $R(t) =  1 - F(t)$ as the reliability function.\\
 			Probabilistics recall:
+
+			\begin{align}
+				f(t) \rightarrow \text{ probabilistic distribution}\\
+				F(t) = \int_{0}^{t}f(t)dt \rightarrow \text{ cumulative function, unreliability}\\
+				R(t) = 1 - F(t) \rightarrow \text{ reliability function}
+			\end{align}
+
+			To be noticed: the function $F(t_i)$ represents the probability that component $i$ is working at time $t_i$ \emph{knowing it was working at time 0}. This is to be taken in mind to make a comparison with the failure rate.\\
+			From this we can define the Mean Time To Failure for a component (that's the expected value):
 			\begin{equation}
-				\begin{aligned}
-					f(t) \rightarrow \text{ probabilistic distribution}\\
-					F(t) = \int_{0}^{t}f(t)dt \rightarrow \text{ cumulative function, unreliability}\\
-					R(t) = 1 - F(t) \rightarrow \text{ reliability function}
-				\end{aligned}
+				\begin{cases}
+					MTTF = \int_0^{\infty}t \cdot f(t)dt\\
+					MTTF = \int_0^{\infty}R(t)dt
+				\end{cases}
 			\end{equation}
-			From this we can define the Mean Time To Failure for a component:
-			\begin{equation}
-				MTTF = \int_0^{\infty}t \cdot f(t)dt
-			\end{equation}
-			Where $t$ represents the failure time. We can also define the failure rate:
+			We can also define the failure rate (mathematically, the conditioned probability):
 			\begin{equation}
 				\lambda(t)dt = F(t < T \leq t+dt \,\vert\, T > t)
 			\end{equation}
@@ -102,11 +106,21 @@
 				\end{itemize}
 				
 				\paragraph{Properties of the failure rate}
+					Probabilistically, failure rate is
 					\begin{equation}
-						\begin{aligned}
-							\lambda(t) = \frac{f(t)}{R(t)} = -\frac{dR(t)}{R(t)dt}\\
-							\lambda(t) = \frac{f(t)dt}{R(t)} = \frac{dF(t)}{R(t)} = -\frac{dR(t)}{R(t)}
-						\end{aligned}
+						\lambda(t)dt = F(t < T \leq t+dt \,\vert\, T > t)
+					\end{equation}
+					So we can derive
+					\begin{equation}
+						\lambda(t)dt = \frac{P(t < T < t + dt \cap T > t)}{P(T > t)}
+					\end{equation}
+					From the definition of combined probability, with P as probability. Given
+					\begin{equation}
+						P(t < T < t+dt) \cap P(T > t) = P(t < T < t+dt)
+					\end{equation}
+					We obtain
+					\begin{equation}
+						\lambda(t)dt = \frac{f(t)dt}{R(t)} = \frac{dF(t)}{R(t)} = -\frac{dR(t)}{R(t)}
 					\end{equation}
 				
 				\paragraph{Reliability as Weibull}
