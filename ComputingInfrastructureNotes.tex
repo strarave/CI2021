@@ -59,9 +59,21 @@
 				Servers are the computational compartment of a WSC. They're organized in racks (shelves) that host the computational units (pizza box computer). Servers are just computers. That's all. They got a MOBO, local primary memory, a CPU, and I/O capabilities. They can be organized as
 				\begin{itemize}
 					\item Towers: cheap, cooling is easy, upgrade is easy. They're also big, and they provide low density of computational power.
-					\item Blades: 
+					\item Blades: also called hybrid racks, the idea is similar to the rack system, but a server is inserted \emph{vertically} instead of \emph{horizontally} in a dedicated place. This (together with the average smaller size of a blade server) enhances computation per volume ratio while keeping all the pros of a rack system. Blade servers have disadvantages: heat management is complex, and enclosures and envelops are more expensive wrt racks.
 					\item Racks: literal racks that host the pizza box shaped computational units, and accomodate all the wiring and additional connection or cooling systems. They can host also heterogeneus components, not only standard computational modules. Rack's dimension and geometry is a standard. Rack organization provides better failure handling and simplified cable management, but they're more power demanding (wrt towers) and mainteinance is a mess (mmultiple devices must be maintained at the same time).
 				\end{itemize}
+				
+				\subsubsection{Hardware Accellerator}
+					WSCs architectures and the rise of heavy computation loads (like for intense machine learning and AI training) have caused a spike in the complexity required every computation, even far beyond the Moore's law. To satisfy this need, dedicated hardware (in the form of \emph{hardware accellerators}) are deployed in WSCs, to enhance the performance in determined fields.
+					
+					\paragraph{GPU}
+						Graphical Processing Units are featured in accellerators to enhance \emph{parallel fast computation}. Due to the archiecture of them, they're also perfect to do matrix computation. 
+						
+					\paragraph{TPU}
+						Tensor Processing Units. These are more specialized GPUs in the machine learning direction. They're (simplifiyng) custom circuits to support tensor computations (matrix calculus) that are \emph{very fast} at doing so. 
+						
+					\paragraph{FPGA}
+						Good ol' Field Programmable Gate Array circuits are still used to enhance performance in custom computational oriented architectures (apple afterburner...). These circuits are somewhat "fully customizable" hardware computers that if programmed in a very specific way can enhance \emph{every kind} of possible computation. 
 				
 	\part{Software Infrastructure}
 	\part{Dependability}
