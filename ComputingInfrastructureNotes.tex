@@ -74,8 +74,73 @@
 						
 					\paragraph{FPGA}
 						Good ol' Field Programmable Gate Array circuits are still used to enhance performance in custom computational oriented architectures (apple afterburner...). These circuits are somewhat "fully customizable" hardware computers that if programmed in a very specific way can enhance \emph{every kind} of possible computation. 
-				
+			
+			\subsection{Storage}
+				Storage. Not much more. Technologies involved: HDDs and SSDs and Flash memory. Performance (and relevant) parameters:
+				\begin{itemize}
+					\item read / write speed and latency (or seek time)
+					\item memory density
+					\item security: but this is intended as an hardware security, not data security (for now)
+					\item cost
+				\end{itemize}
+			
 	\part{Software Infrastructure}
+	
+	\part{Methods}
+		\section{HDD and RAID Technologies}
+			Memory and files in disks are organized in clusters to simplify the management of the data. We have:
+			\begin{equation}
+				\begin{cases}
+					a = \text{ actual size of a file on disk}\\
+					c = \text{ cluster size}\\
+					s = \text{ file size}
+				\end{cases}
+			\end{equation}
+			and it holds that $ a = ceiling(\frac{s}{c}) \,\times\, c$.
+			
+			\subsection{Data and Metadata}
+				Data is the content stored in a mass storage device. Metadata is (as the name suggests) additional data stored in the storage device \emph{that not contains actual content}. Metadata contains indexes, addresses, cached data that is used to manage \emph{the actual data stored}.
+				
+			\subsection{Magnetic Hard Drives}
+				Magnetic disks have an internal structure and an external interface to manage files and data. The internal structure is often based in c/h/s coordinates, that are cylinder, head and sector locations. The external interface is usually composed of clusters. The traslation is carried out directly by the electronics on the disk.
+				
+				\subsubsection{Delays}
+					The principles on which the HDD storage is based relies on some phisical objects and their movement. The intrinsic limits of this system translates into delays in the reading of data. Four type of delays can be identified:
+					\begin{itemize}
+						\item Rotational: it's the time occurred to move the portion of plate under the desired head. It's related to RPM, of course
+						\item Seek: it's the time needed to a head to move from a track to another
+						\item Transfer: actual time to read the bytes
+						\item Control: overhead time, related to the circuitery that manages the hardware
+					\end{itemize}
+					
+					So, in order to calculate the actual time that passes between the issue of the read command to the presence of the desidered file on the I/O bus we have to sum all the delays.
+					\begin{equation}
+						T_{read} = T_{rotate} + T_{seek} + T_{transfer} + T_{overhead}
+					\end{equation}
+					Usually, the transfer speed is usually given as transfer ratio $\frac{MB}{sec}$. 
+					
+					\paragraph{Reducing Latency}
+						Caching is the most used mechanism to make data available \emph{faster} in order to reduce latency. Usually, at hardware level, the cache is implemented by means of a phisycal additional RAM memory built directly in the HDD.
+						
+						\subparagraph{Read Cache}
+							Often accessed data access can be reduced if there's no need to go down to the plate in order to read it all the times.
+						
+						\subparagraph{Write Back Cache}
+							Write buffer: writes are cached before accessing the disk, and then flushed at the end. N.B.: the "write finish" signal is issued at the end of the \emph{caching} of the data.
+							
+						\subparagraph{Write Through Cache}
+							No write buffer: the "write finish" signal is issued after the write is actual written on the disk.
+							
+						\subparagraph{Scheduling}
+							As always, reordering operation in order to maximize efficency is a solid approach to enhance performance, in this case reducing latency in accessing the disk. These kind of approaches (that usually prefers "near" sector) are prone to starvation, usually. Workaround to starvation problem usually are based on linearizing the traversing of the cylinders, like the elevator meachanism.\\
+			
+			\subsection{RAID}
+				Redundant Array of Inexpensive Disks is a technology that exploits the parallelization of I/O bus to multiple disks in order to enhance security, write and read speed, and fault tolerance. Data are copied / distributed on multiple disks, that are presented to the OS as a single one. Different strategies can be put in place to organize the data pieces:
+				\begin{enumerate}
+					\item data striping: in a round robin fashion, data are partitioned circularly in the disk. This means that each file, when it's written, it's stripped down to fixed dimension blocks and then memorized in different disks. This enhance write and read speed: we can exploit parallel write/read operation. This also increase fault probability (more disks = more fault) decreasing reliability.
+				\end{enumerate}
+							
+	
 	\part{Dependability}
 		\section{Probabilistic approach}
 			Dependability represents the \emph{availability performance} of a system. It encompasses 

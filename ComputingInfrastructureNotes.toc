@@ -10,13 +10,25 @@
 \contentsline {paragraph}{GPU}{4}{}%
 \contentsline {paragraph}{TPU}{4}{}%
 \contentsline {paragraph}{FPGA}{5}{}%
+\contentsline {subsection}{\numberline {2.5}Storage}{5}{}%
 \contentsline {part}{III\hspace {1em}Software Infrastructure}{5}{}%
-\contentsline {part}{IV\hspace {1em}Dependability}{5}{}%
-\contentsline {section}{\numberline {3}Probabilistic approach}{5}{}%
-\contentsline {subsection}{\numberline {3.1}Failure Rate}{6}{}%
-\contentsline {paragraph}{Properties of the failure rate}{6}{}%
-\contentsline {paragraph}{Reliability as Weibull}{6}{}%
-\contentsline {paragraph}{Reliability as exponential}{6}{}%
-\contentsline {subsection}{\numberline {3.2}System level reliability}{7}{}%
-\contentsline {paragraph}{Extension of MTTF calculation to complex systems}{7}{}%
-\contentsline {subsection}{\numberline {3.3}Availability}{7}{}%
+\contentsline {part}{IV\hspace {1em}Methods}{5}{}%
+\contentsline {section}{\numberline {3}HDD and RAID Technologies}{5}{}%
+\contentsline {subsection}{\numberline {3.1}Data and Metadata}{5}{}%
+\contentsline {subsection}{\numberline {3.2}Magnetic Hard Drives}{6}{}%
+\contentsline {subsubsection}{\numberline {3.2.1}Delays}{6}{}%
+\contentsline {paragraph}{Reducing Latency}{6}{}%
+\contentsline {subparagraph}{Read Cache}{6}{}%
+\contentsline {subparagraph}{Write Back Cache}{6}{}%
+\contentsline {subparagraph}{Write Through Cache}{6}{}%
+\contentsline {subparagraph}{Scheduling}{6}{}%
+\contentsline {subsection}{\numberline {3.3}RAID}{7}{}%
+\contentsline {part}{V\hspace {1em}Dependability}{7}{}%
+\contentsline {section}{\numberline {4}Probabilistic approach}{7}{}%
+\contentsline {subsection}{\numberline {4.1}Failure Rate}{8}{}%
+\contentsline {paragraph}{Properties of the failure rate}{8}{}%
+\contentsline {paragraph}{Reliability as Weibull}{8}{}%
+\contentsline {paragraph}{Reliability as exponential}{8}{}%
+\contentsline {subsection}{\numberline {4.2}System level reliability}{9}{}%
+\contentsline {paragraph}{Extension of MTTF calculation to complex systems}{9}{}%
+\contentsline {subsection}{\numberline {4.3}Availability}{9}{}%
