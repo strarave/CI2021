@@ -1,5 +1,6 @@
 \documentclass[10pt,a4paper]{article}
 \usepackage{amsmath}
+\usepackage{graphicx}
 \title{Computing Infrastructure}
 \author{Elia Ravella}
 \begin{document}
@@ -83,6 +84,46 @@
 					\item security: but this is intended as an hardware security, not data security (for now)
 					\item cost
 				\end{itemize}
+				
+				\subsubsection{Storage Systems - DAS, NAS, SAN}
+					\begin{itemize}
+						\item Direct Attached Storage is every device that offers storage capabilities and is directly attached to the unit processing such data in the storage. HDDs are DAS for personal computers, for example. They're directly accessible from the OS of the machine accessing it.
+						\item Network Attached Storage is a storage system that lies \emph{on the other end} of a network. A NAS only offers data services accessible from dedicated protocols (as FTP, SAMBA) and it's \emph{an actual computer} that offers services.
+						\item Storage Area Network is like NAS, but the remote storage unit are \emph{passive} and are directly accessible by the OS (by means still of a network connection). They're \emph{remotely accessed simple storage devices}.
+					\end{itemize}
+					\begin{figure}
+						\centering
+						\includegraphics[width = \textwidth]{./images/storage.png}
+					\end{figure}
+					
+					\paragraph{DAS}
+						Traditional attached local storage systems. They're difficult to scale. They are difficult to manage when particular storage solutions are needed. Moreover, the OS's proprietary file sharing model / protocol / software must be used in order to share files.
+						
+					\paragraph{NAS}
+						A NAS is a \emph{full fledged computer} that's \emph{only meant for storage services}, accessible through network protocols. It's located somewhere in the network. It's easily scalable (both augmenting the storage of a single NAS or multiplying the NAS number work).
+					
+					\paragraph{SAN}
+						Disks are visible \emph{like local storage, like DAS} to the server machina, but they're network attached. They have specialize hardware that mask the network in between, and the SAN can be accessed \emph{directly through the filesystem}. 
+				
+			\subsection{Networking}
+				A WSC networking system can be divided in 2 separate blocks:
+				\begin{itemize}
+					\item an internal LAN that connects all the components (the servers) among themselves
+					\item an interface to the internet (DMZ..?)
+				\end{itemize}
+				
+				Obviously, the networking infrastructure in a WSC is crucial because it also connects the functional units (as the server) to the storage infrastructure and so it's \emph{fundamental} that this connections is solid. The need of inter-server bandwidth incerases exponentially with the number of server, obviously.\\
+				A WSC internal network is usually divided in 3 levels:
+				\begin{enumerate}
+					\item Access: this network layer is the one that connects the servers to the network. It's embodied by the network infrastructures embedded in the server racks.
+					\item Aggregation: this level groups the servers together (VLAN-like) and it's usually implemented as Top Of the Rack switches, that group together all the server in a aisle (for example).
+					\item Core: furthest level from the single server, aggregates entities of the "aggregation" level.
+				\end{enumerate}
+				
+			\subsection{Building and Non-IT Equipment}
+				The way in which the hardware is arranged \emph{inside} a DC is as crucial as the building composing the DC itself, as well as the non-IT instruments (like the cooling system, or the enrgy system) that completes the DC structure.\\
+				
+				
 			
 	\part{Software Infrastructure}
 	
