@@ -17,24 +17,32 @@
 \contentsline {paragraph}{SAN}{5}{}%
 \contentsline {subsection}{\numberline {2.6}Networking}{6}{}%
 \contentsline {subsection}{\numberline {2.7}Building and Non-IT Equipment}{6}{}%
-\contentsline {part}{III\hspace {1em}Software Infrastructure}{7}{}%
-\contentsline {part}{IV\hspace {1em}Methods}{7}{}%
-\contentsline {section}{\numberline {3}HDD and RAID Technologies}{7}{}%
-\contentsline {subsection}{\numberline {3.1}Data and Metadata}{7}{}%
-\contentsline {subsection}{\numberline {3.2}Magnetic Hard Drives}{7}{}%
-\contentsline {subsubsection}{\numberline {3.2.1}Delays}{7}{}%
-\contentsline {paragraph}{Reducing Latency}{8}{}%
-\contentsline {subparagraph}{Read Cache}{8}{}%
-\contentsline {subparagraph}{Write Back Cache}{8}{}%
-\contentsline {subparagraph}{Write Through Cache}{8}{}%
-\contentsline {subparagraph}{Scheduling}{8}{}%
-\contentsline {subsection}{\numberline {3.3}RAID}{8}{}%
-\contentsline {part}{V\hspace {1em}Dependability}{8}{}%
-\contentsline {section}{\numberline {4}Probabilistic approach}{9}{}%
-\contentsline {subsection}{\numberline {4.1}Failure Rate}{9}{}%
-\contentsline {paragraph}{Properties of the failure rate}{10}{}%
-\contentsline {paragraph}{Reliability as Weibull}{10}{}%
-\contentsline {paragraph}{Reliability as exponential}{10}{}%
-\contentsline {subsection}{\numberline {4.2}System level reliability}{10}{}%
-\contentsline {paragraph}{Extension of MTTF calculation to complex systems}{11}{}%
-\contentsline {subsection}{\numberline {4.3}Availability}{11}{}%
+\contentsline {subsubsection}{\numberline {2.7.1}Energy System}{7}{}%
+\contentsline {paragraph}{The UPS}{7}{}%
+\contentsline {subsubsection}{\numberline {2.7.2}Cooling System}{7}{}%
+\contentsline {part}{III\hspace {1em}Software Infrastructure}{8}{}%
+\contentsline {section}{\numberline {3}Virtualization}{8}{}%
+\contentsline {subsection}{\numberline {3.1}Virtual Machines}{8}{}%
+\contentsline {subsection}{\numberline {3.2}Levels of Virtualization}{9}{}%
+\contentsline {subsubsection}{\numberline {3.2.1}OS Level Virtualization}{9}{}%
+\contentsline {subsubsection}{\numberline {3.2.2}Process Level Virtualization}{9}{}%
+\contentsline {part}{IV\hspace {1em}Methods}{9}{}%
+\contentsline {section}{\numberline {4}HDD and RAID Technologies}{9}{}%
+\contentsline {subsection}{\numberline {4.1}Data and Metadata}{9}{}%
+\contentsline {subsection}{\numberline {4.2}Magnetic Hard Drives}{9}{}%
+\contentsline {subsubsection}{\numberline {4.2.1}Delays}{9}{}%
+\contentsline {paragraph}{Reducing Latency}{10}{}%
+\contentsline {subparagraph}{Read Cache}{10}{}%
+\contentsline {subparagraph}{Write Back Cache}{10}{}%
+\contentsline {subparagraph}{Write Through Cache}{10}{}%
+\contentsline {subparagraph}{Scheduling}{10}{}%
+\contentsline {subsection}{\numberline {4.3}RAID}{10}{}%
+\contentsline {part}{V\hspace {1em}Dependability}{10}{}%
+\contentsline {section}{\numberline {5}Probabilistic approach}{11}{}%
+\contentsline {subsection}{\numberline {5.1}Failure Rate}{11}{}%
+\contentsline {paragraph}{Properties of the failure rate}{12}{}%
+\contentsline {paragraph}{Reliability as Weibull}{12}{}%
+\contentsline {paragraph}{Reliability as exponential}{12}{}%
+\contentsline {subsection}{\numberline {5.2}System level reliability}{12}{}%
+\contentsline {paragraph}{Extension of MTTF calculation to complex systems}{13}{}%
+\contentsline {subsection}{\numberline {5.3}Availability}{13}{}%
