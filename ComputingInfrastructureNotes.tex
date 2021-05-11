@@ -211,14 +211,13 @@
 				Cloud computing is a model for enabling on demand network access to a shared pool of computing resources. The cloud approach pushed the *aaS paradigm to his limits: it started as "outsourcing to someone in the internet some computations" and it's "giving someone in the internet full control over our technologic stack".
 				
 				\subsubsection{Software as a Service}
+					Software as a Service is the mechanism that allows users to access an entire software an entire application) without installing it, just exploiting cloud hardware and systems. GMail, GDocs are examples of SaaS
 				
 				\subsubsection{Platform as a Service}
+					PaaS is aimed towards developers. Cloud providers make available \emph{developing frameworks and platforms} to ease developing applications (like Colab, the ML engine by Google) and the cloud machine "just" have to provide libraries, hardware and APIs that are necessary in the developing process.
 				
-				\subsubsection{Infrastructure as a Service}
-				
-				\subsubsection{Data as a Service}
-				
-				\subsubsection{Communication as a Service}
+				\subsubsection{Infrastructure, Data and Communication as a Service}
+					IaaS, DaaS and CaaS are three approaches to "simplify your design through services" possibilities. A company can decide to use a DaaS system in order to organize data (this is a full \emph{outsource decision}) to not have the burden of manage a fuckton of data. IaaS provides the \emph{computational resources}, maybe to make computational-intensive processes easier (without having to develop the entire app in the outsourced system though). DaaS provides online data: as the aformentioned example, a company that outsource the data to a DaaS provider gains full management of data (so backup, security, integrity, availability) through a web application. CaaS represents a bunch of systems \emph{provided usually as a web service} that provides the communication mechanism for companies. 
 				
 			\subsection{Cloud Systems Taxonomy}
 				\begin{itemize}
@@ -289,19 +288,22 @@
 					Data is mirrored. On two disks, the same copy of data is stored. This improves read speed (you can split the read of blocks) but worsen capacity and write speed. Obviously, reliability is increased. On more than 2 disks (where the mirroring is quite straightforward) raid 1 and 0 can be combined:
 					\begin{itemize}
 						\item RAID 0 + 1: strip then mirror. Data is striped on the first set of disks and then \emph{mirrored striped on the second set}. 
-						\item RAID 1 + 0: mirror then strip. The data is first mirrored in two clusters and then striped in the individual clusters. The difference between 0+1 and 1+0 can be appreciated only on clusters of more then 4 disks. This configuration is more fault tolerant than the 0+1
+						\item RAID 1 + 0: mirror then strip. The data is first mirrored in two clusters and then striped in the individual clusters. This configuration is more fault tolerant than the 0+1, because the more fault tolerant controller (the RAID 1 one) is closer to the disks. This statement can be formally proven. 
 					\end{itemize}
 					Raid 0+1 and 1+0 can be imagined as a series of raid controllers.
 					
 				\subsubsection{RAID 2 and 3}
+					RAID two and three use interleaving to store chunks of data and to generate redundancy. These two technologies are not used nor of interest now.
 					
 				
 				\subsubsection{RAID 4}
-					RAID 4 delegates and entire disk of the array to storing parity bits (calculated by XORRING all the bits in the other disks in that position). The parity bits allows to \emph{reconstruct data} when a single disk fails, because we can XOR back the parity configuration and rebuild the data. This comes at a cost in writes, especially in random ones: updating the parity bits (that are all on the same disk $\Rightarrow$ they cannot be parallelized) costs a lot if the writes are not sequential. 
+					RAID 4 delegates and entire disk of the array to storing parity bits (calculated by XORRING all the bits in the other disks in that position). The parity bits allows to \emph{reconstruct data} when a single disk fails, because we can XOR back the parity configuration and rebuild the data. This comes at a cost in writes, especially in random ones: updating the parity bits (that are all on the same disk $\Rightarrow$ they cannot be parallelized) costs a lot if the writes are not sequential or not in the same XORRED stripe. 
 				
-				\subsubsection{RAID 5 and 6}
+				\subsubsection{RAID 5}
 					Why should I accumulate all the parity bits in a single disk? RAID 5 overcomes the limits of RAID 4 by \emph{striping} across the array the parity blocks. This still reduces the capacity of the array \emph{by one entire disk}, but the random writes speed up (you can now parallelize parity writes).\\
-					RAID 6 further improves RAID 5 idea, doubling the parity blocks across disks. This "throws away" two disks in the array, but the entire configuration can now tolerate the failure of two disks.
+					
+				\subsubsection{RAID 6}
+					RAID 6 further improves RAID 5 idea, doubling the parity blocks across disks. The parity bit generation algorithm is different: Solomon-Reed's encoding is used instead of simple XOR. RAID 6 "throws away" two disks in the array, but the entire configuration can now tolerate the failure of two disks. Despite the super high fault tolerance of the system though, the write speed is worsened by a lot.
 					
 				\subsubsection{Math Stuff}
 					\begin{figure}[H]
@@ -331,6 +333,82 @@
 			\subsection{Evaluating Performance through Queuing Networks}
 				We'll use a model based approach to evaluate performance indexes. The model for us is queuing networks, classic distributed racing systems with scarce resources. These are usually represented as a set of services corredated with a queue to store clients. A client is served and then leaves the service. 
 				
+				\subsubsection{The Model}
+					As said, a queuing network is composed by
+					\begin{enumerate}
+						\item Customers, or \emph{clients}, that need to use a service
+						\item Service centers, that provide services. A service center is itself composed of
+							\begin{enumerate}
+								\item A buffer, the queue of arrivals
+								\item A "server station" that provide the very server.
+							\end{enumerate}
+					\end{enumerate}
+					\begin{figure}[H]
+						\centering
+						\includegraphics[width = \textwidth]{./images/queuingNetworks.png}
+					\end{figure}
+					
+				\subsubsection{Parameters of the Model}
+					To characterize our model, we usually quantify some of its aspects, such as
+					
+					\paragraph{Arrivals}
+						Arrivals represent the clients of a system. In a network, they can come from either an external source, from another service station, or from the service station that they've just used (loop back arc).
+						
+					\paragraph{Services}
+						Servers provide services. They can "hold" a client\footnote{the amount of time it holds a client is a parameter to be taken into consideration when evaluating performance} until the job is done, then they pass to the next element in the queue.
+						
+					\paragraph{Queue}
+						The queues represent the buffer of clients before servers. When a client leaves the server, another one from the queue is selected \emph{according to the queuing policy}.
+						
+					\paragraph{Population}
+						The population is the set of clients in the network. Ideally, each member is indistinguishable from the others; usually we can divide members in classes of members that all show the same behaviour. The behaviour of a member is characterized by several factors, as arrival rate, service demand, post service behaviour...
+						
+					\paragraph{Routing}
+						The "place a client goes when is job has been served" is a parameter of the system, in particular is defined by the \emph{routing policy} of that system. Routing policies can be
+						\begin{itemize}
+							\item Probabilistic
+							\item Channel based (like round robin)
+							\item Queue based (like join-the-shortest-queu)
+						\end{itemize}
+			
+			\subsection{The Performance Estimation Process}
+				Once a model has been built (so in our case, a network of queuing processes) in order to evaluate the performance we have to parametrize the model itself and then estimate the performance indices. To do so, we must mathematically formalize how the model behaves: we can do such through the use of Operational Laws.\\
+				Operational laws are basically equations that usually represents the the averaged behaviour of each system. Operational laws are based on observable variables, that can be "read" from the system. For example, given our model, we can without effort observe the variables
+				\begin{itemize}
+					\item The number of arrivals A
+					\item The number of completions C
+					\item The amount of time the system is busy B
+					\item The average number of jobs in the system N
+					\item The time span we used to observe the system T
+				\end{itemize}
+				We can already derive some operational laws:
+				\begin{equation}
+					\begin{cases}
+						\lambda = \frac{A}{T} \\
+						X = \frac{C}{T} \\
+						U = \frac{B}{T} \\
+						S = \frac{B}{C}
+					\end{cases}
+				\end{equation}
+				Representing the arrival rate, the throughput, the utilisation and the mean service time. Notice that these laws can refer the whole system or the single service station.\\
+				We direct our experiments on the model in order to have $\lambda = X$, also called "job flow balance" condition.
+				
+				\subsubsection{Utilization Law}
+					From literally one substitution we can derive the so called utilization law:
+					\begin{equation}
+						U_k = X_k \,\times\, S_k
+					\end{equation} 
+					Where the "k" is the identifier for a single resource/service station in the system. This law expresses the "occupational fraction" of a station, so how much a station is busy. Expressed in words, it's the rate of arrival of requests times the time needed to carry out one of them. It's easy to notice how, if this value is greater than one, the queue will grow in time.
+					
+				\subsubsection{Little Law}
+					The Little's law (or result, or lemma) states
+					\begin{equation}
+						N = X \,\times\,R
+					\end{equation}
+					So \emph{the number of requests in the system is equal to the throughput multiplied by the average time R a request spends in the system}. Dimensionally: X is requests over time while R is time $\Rightarrow$ N is requests.
+					
+					
+					
 	\part{Dependability}
 		\section{Probabilistic approach}
 			Dependability represents the \emph{availability performance} of a system. It encompasses 
