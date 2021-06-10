@@ -380,6 +380,7 @@
 					\item The amount of time the system is busy B
 					\item The average number of jobs in the system N
 					\item The time span we used to observe the system T
+					\item The visits to each station V
 				\end{itemize}
 				We can already derive some operational laws:
 				\begin{equation}
@@ -393,22 +394,107 @@
 				Representing the arrival rate, the throughput, the utilisation and the mean service time. Notice that these laws can refer the whole system or the single service station.\\
 				We direct our experiments on the model in order to have $\lambda = X$, also called "job flow balance" condition.
 				
-				\subsubsection{Utilization Law}
+				\paragraph{Utilization Law}
 					From literally one substitution we can derive the so called utilization law:
 					\begin{equation}
 						U_k = X_k \,\times\, S_k
 					\end{equation} 
 					Where the "k" is the identifier for a single resource/service station in the system. This law expresses the "occupational fraction" of a station, so how much a station is busy. Expressed in words, it's the rate of arrival of requests times the time needed to carry out one of them. It's easy to notice how, if this value is greater than one, the queue will grow in time.
 					
-				\subsubsection{Little Law}
+				\paragraph{Little Law}
 					The Little's law (or result, or lemma) states
 					\begin{equation}
 						N = X \,\times\,R
 					\end{equation}
 					So \emph{the number of requests in the system is equal to the throughput multiplied by the average time R a request spends in the system}. Dimensionally: X is requests over time while R is time $\Rightarrow$ N is requests.
 					
+				\paragraph{Forced Flow Law}
+					The FFL is another operational law that binds the the throughput of the entire system to the throughput of the single service stations.
+					\begin{equation}
+						X_k = V_k \,\times\, X
+					\end{equation}
+					Where V is the visit count for the particular service station k, defined as $\frac{C_k}{C}$ so the fractions of completions of a single service station. Visit count is important when related to total completions: when $V_k$ is greater than one, the number of completions at system level corresponds to a higher number of visits to the single service station.  
 					
+				\paragraph{Service Demand}
+					The service demand represents the amount (in time) of service asked \emph{to a specific service station}. It's computed as
+					\begin{equation}
+						D_k = S_k \,\times\, V_k
+					\end{equation}
 					
+				\paragraph{Residence and Response Time}
+					The response time $\tilde{R}$ is the time spent by a job in a service station, counting the queue time. The residence time instead is the time spent by a job in a service station \emph{during all system time}: so accounting for the loops and reiteration. The pretty straightforward relation is $R_k = V_k \,\times\, \tilde{R}$, that's the same relationship between Demand and Service Time. 
+					
+				\paragraph{General Response Time Law}
+					The GRTL calculates the average response time for a job:
+					\begin{equation}
+						R = \sum_k (V_k \,\times\, \tilde{R_k}) = \sum_k (R_k)
+					\end{equation}
+					
+				\subsubsection{Math Stuff}
+					Putting all together, we can derive the utilization law for a single service station as:
+					\begin{equation}
+						U_k = 
+						\begin{cases}
+							X_k \,\times\, S_k \\
+							(X \,\times\, V_k) \,\times\,S_k \\
+							D_k \,\times\, X
+						\end{cases}
+					\end{equation}
+					
+				\subsubsection{SUMMARY}
+					\begin{figure}
+						\centering
+						\includegraphics[width = \textwidth]{./images/superSummary1.png}
+						\caption{Super Summary of the formulas seen in this chapter.}
+					\end{figure}
+					
+		\section{Performance Asymptotic Bounds}
+			Performance bounds are the asymptotic values that our figures of merit can reach in a system. These can be useful in the modeling process to find the element that impact the most the performances, among the others the bottlenecks. Asymptotic analysis provides optimistic and pessimistic bounds on two major performance indexes: throughput X and response time R.
+			
+			\paragraph{Notation and Quantities}
+				We'll focus on expressing X and R as functions of
+				\begin{itemize}
+					\item K $\rightarrow$ number of service centers
+					\item D $\rightarrow$ sum of all the service demands at the centers
+					\item $D_{max}$ $\rightarrow$ largest service demand at a single center
+					\item Z $\rightarrow$ average think time for interactive systems
+				\end{itemize}
+				We'll analize
+				\begin{itemize}
+					\item Optimistic scenarios, where we search X's upper bound and R's lower bound
+					\item Pessimistc scenarios, viceversa: throughput lower bound and maximum values of response time
+				\end{itemize}
+			
+			\subsection{Open Models}
+				We can analyze both X and R at the extreme scenarios. X would have only an upper bound, while R only a lower one.
+				\begin{equation}
+					\begin{cases}
+						X(\lambda) \,\leq\, \frac{1}{D_{max}}\\
+						R(\lambda) \,\geq\, D
+					\end{cases}
+				\end{equation}
+				Where $\lambda$ is the arrival rate of requests.
+				
+			\subsection{Closed Models}
+				Closed models enjoy the property to have a \emph{constant number of customers}. This renders very easy to calculate the bounds of performance.\\
+				Usually, the bounds on throughput are considered first, then are transformed into bounds on response time though Little's law. We have two scenarios:
+				
+				\paragraph{Light Load Scenarios}
+					In light load scenarios, the bounds on throughput can be calculated as:
+					\begin{equation}
+						\begin{cases}
+							X(\lambda) \,\geq\, \frac{N}{ND + Z}\\
+							X(\lambda) \,\leq\, \frac{N}{D + Z}
+						\end{cases}
+					\end{equation}
+				
+				
+			\subsection{SUMMARY}	
+				\begin{figure}
+					\centering
+					\includegraphics[width = \textwidth]{./images/superSummary2.png}
+				\end{figure}
+				
 	\part{Dependability}
 		\section{Probabilistic approach}
 			Dependability represents the \emph{availability performance} of a system. It encompasses 
