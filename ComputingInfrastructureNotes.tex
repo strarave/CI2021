@@ -207,9 +207,7 @@
 					Java approach; isolated execution environment for each application. The VM just translates from the proprietary binaries to the actual machine's executable code. "Code once run everywhere".
 					
 				\subsubsection{System VMs}
-					Virtual machine monitor on the bare metal, carries out the sharing. Virtual machine's on top of the VMM, and when a hardware-call is done this is passed through the VMM. The VMM uses the same ISA (the one of the machine).
-				
-				\subsubsection{Emulation}
+					Virtual machine monitor on the bare metal, carries out the sharing. Virtual machine's on top of the VMM, and when a hardware-call is done this is passed through the VMM. The VMM uses the same ISA (the one of the machine). VMM can also be a program installed in another OS: in that case we're talking about \emph{whole system VMs}\footnote{Virtualbox approach}.
 				
 			\subsection{Virtualization Implementation}
 				As already said, in order to virtualize something we have to add some middleware in the software stack that carries out the virtualizing mechanism. We can put this layer \emph{between the hardware and the OS}, or \emph{between the operating system and the processes} as in JVM or even \emph{between the OS and other OSs}, as in virtualbox.\\
@@ -228,6 +226,16 @@
 					\item Type 1 hypervisors provide an abstraction and a full environment to a host relying directly on the hardware.
 					\item Type 2 hypervisors (virtualbox) provide the virtualized hardware exploting \emph{a host operating system}.
 				\end{itemize}
+				\begin{figure}[H]
+					\centering
+					\includegraphics[width = \textwidth]{./images/VMMs.png}
+					\caption{Type 1 and type 2 VMMs}
+				\end{figure}
+				
+			\subsection{Virtualization Techniques}
+				\subsubsection{Paravirtualization}
+					In a paravirtualized system, the underlying VMM is not transparent wrt the hardware. In fact, it modifies the hardware interface. There's really no more to this definition, even wikipedia is less detailed.\\
+					This kind of modification is usually done when particular soft tuned modification needs to be done in order to improve performance.
 				
 			\subsection{Containers}
 				A container is a pre configured package that comprises all the software pieces needed to run a particular type of software (like the database, the support for certain languages and services). All the software comes \emph{configured}. This approach does not fall entirely under the "virtualization" hat, because they do not depend on a OS (the container does not provide one). Instead, they rely on a container engine (as the docker engine).
