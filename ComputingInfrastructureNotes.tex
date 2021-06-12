@@ -1,7 +1,10 @@
 \documentclass[10pt,a4paper]{article}
+
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{array}
+
 \title{Computing Infrastructure}
 \author{Elia Ravella}
 \begin{document}
@@ -12,12 +15,12 @@
 	\tableofcontents
 	\clearpage
 	
-	\part{Introduction}
+	\clearpage \part{Introduction}
 		\section{Computing Infrastructure}
-			What is a CI? A CI is a \emph{technological structure} that provides hardware and software for computation to other systems. This means a lot: is a joint (and heterogeneous) system that comprises both HW and SW to deliver a service. With CI is not intended the \emph{application delivered} but the combination of elements that makes the application available and running.\\
+			What is a CI? A CI is a \emph{technological structure} that provides hardware and software for computation to other systems. This means a lot: is a joint (and heterogeneous) system that comprises both HW and SW to deliver several services. With CI is not intended the \emph{application delivered} but the combination of elements that makes the application available and running.\\
 			So everything in between a RaspPI that does torrent seeding from a local network to the whole datacenter that runs an AWS service can be considered a computing infrastructure.
 			
-	\part{Hardware Infrastructures}
+	\clearpage \part{Hardware Infrastructures}
 		\section{Data Centers}
 			\subsection{Pros and cons}
 				Data centers are big centralized CIs that comprise a lot of servers (to provide computations) a communication infrastructure, and a storage service.\\ 
@@ -35,8 +38,13 @@
 				
 			\subsection{DCs ans WSCs}
 				The data center approach has been emerging in the last years. The idea behind it is that we should not "overpack" nodes of a network with all the computing capabilities required, but instead giving them a connection to such CIs. Data centers are the perfect example for this paradigm: the user interact with a client (that can be \emph{any kind of device}) that also interact with a remote structure to provide computations. To a careful watch, SaaS and their spread are a direct conseguence of this paradigm shift. Another use of DCs is using their computing capabilities not in a fragmented way to provide miriads of services, but to perform an \emph{extremely costly computation}, like a training of a neural network.\\
-				From a DC approach we are moving to a Warehouse Scale Computers nowadays. This latter approach consists of NOT "mix up the pot" in a DC (so having a lot of heterogeneous technologies in order to achieve different tasks) but instead to "homogeneify" the cloud structure in order to do better optimization of it. Not only in the HW, but also in the SW. To centralize the DC capabilities under a single organization (as often happens) means that clients no more run their application on someone else's hardware, but instead choose from a set of precooked solutions by such vendor/organization. Is this \emph{bad}? WSCs are just a "SaaS - oriented" Data Center Architectures, so \emph{there's no real transition between DCs and WCSs} the only transition is in the number of \emph{virtualiazed layers the client must go through to access and application}.\\
-				We can sum up the difference between DCs and WSCs in this way: where DCs are intended as a powerful collection of different servers, WSCs tries to offer a homogeneous interface that can be used also as a single server to such a collection of hardware. Still, if we consider a lerger definition for DCs, WSCs are a type of DCs. 
+				From a DC approach we are moving to Warehouse Scale Computers nowadays. This latter approach consists of NOT "mixing up the pot" in a DC (so having a lot of heterogeneous technologies in order to achieve different tasks) but instead to "homogeneify" the cloud structure in order to do better optimization of it. Not only in the HW, but also in the SW. To centralize the DC capabilities under a single organization (as often happens) means that clients no more run their application on someone else's hardware, but instead choose from a set of precooked solutions by such vendor/organization. Is this \emph{bad}? WSCs are just a "SaaS - oriented" Data Center Architectures, so \emph{there's no real transition between DCs and WCSs} the only transition is in the number of \emph{virtualiazed layers the client must go through to access an application}.\\
+				We can sum up the difference between DCs and WSCs in this way: where DCs are intended as a powerful collection of different servers, WSCs tries to offer a homogeneous interface that can be used also as a single server to such a collection of hardware. Still, if we consider a larger definition for DCs, WSCs are a type of DCs. 
+				\begin{figure}[H]
+					\centering
+					\includegraphics[width = \textwidth]{./images/wsc.png}
+					\caption{Left, the classic DC approach. Right, the WSC scheme.}
+				\end{figure}
 				
 			\subsection{Architectural Overview of DCs and WCSs}
 				A standard data center building is organized in separated modules, every one dedicated to a specific task. The four main modules types are
@@ -52,7 +60,7 @@
 						\end{itemize}
 				\end{itemize}
 				Servers are organized in racks, blades or tower, and are the classical computational unit usually found in server farms. They could also not have memory attached.\\
-				Storage is the crucial long term memory for a CI. Usually built with flash SSDs and ferromgnetic mechanical disks. The memory units must provide high speed I/O capabilities, and also advanced networking power, also at software level (NAS, SAN, DAS).\\
+				Storage is the crucial long term memory for a CI. Usually built with flash SSDs and ferromagnetic mechanical disks. The memory units must provide high speed I/O capabilities, and also advanced networking power, also at software level (NAS, SAN, DAS).\\
 				The networking infrastructure is the backbone of the communication in (and from/to) a data center. Structured hierarchical approach to networking structures and organization are used to ensure security and performace\\
 				The building itself is part of the CI.\\
 				Next sections will delve into the details of the single modules.
@@ -64,18 +72,33 @@
 					\item Blades: also called hybrid racks, the idea is similar to the rack system, but a server is inserted \emph{vertically} instead of \emph{horizontally} in a dedicated place. This (together with the average smaller size of a blade server) enhances computation per volume ratio while keeping all the pros of a rack system. Blade servers have disadvantages: heat management is complex, and enclosures and envelops are more expensive wrt racks.
 					\item Racks: literal racks that host the pizza box shaped computational units, and accomodate all the wiring and additional connection or cooling systems. They can host also heterogeneus components, not only standard computational modules. Rack's dimension and geometry is a standard. Rack organization provides better failure handling and simplified cable management, but they're more power demanding (wrt towers) and mainteinance is a mess (mmultiple devices must be maintained at the same time).
 				\end{itemize}
+				To sum up:
+				\begin{center}
+					\begin{tabular}{ | m{2cm} || m{5cm} | m{5cm} |}
+					\hline
+					\textbf{Format} & \textbf{Pros} & \textbf{Cons} \\
+					\hline
+					\hline
+					Tower & Cost effective, easy to cool down (low component density), easy to upgrade & bulky, not so powerful, messy cable management \\
+					\hline
+					Rack & Easy to replace, straightforward cabling, cost effective & high component density leads to high power consumption, difficult to maintain singularly \\
+					\hline
+					Blade & Super compact, support for centralized management, easy cabling & Expensive first configuration, nightmare to cool down \\
+					\hline
+					\end{tabular}
+				\end{center}
 				
 				\subsubsection{Hardware Accellerator}
 					WSCs architectures and the rise of heavy computation loads (like for intense machine learning and AI training) have caused a spike in the complexity required every computation, even far beyond the Moore's law. To satisfy this need, dedicated hardware (in the form of \emph{hardware accellerators}) are deployed in WSCs, to enhance the performance in determined fields.
 					
 					\paragraph{GPU}
-						Graphical Processing Units are featured in accellerators to enhance \emph{parallel fast computation}. Due to the archiecture of them, they're also perfect to do matrix computation. 
+						Graphical Processing Units are featured in accellerators to enhance \emph{parallel fast computation}. Due to the architecture of them, they're also perfect to do matrix computation. 
 						
 					\paragraph{TPU}
-						Tensor Processing Units. These are more specialized GPUs in the machine learning direction. They're (simplifiyng) custom circuits to support tensor computations (matrix calculus) that are \emph{very fast} at doing so. 
+						Tensor Processing Units. These are more specialized GPUs in the machine learning direction. They're (simplifying) custom circuits to support tensor computations (matrix calculus) that are \emph{very fast} at doing so. Google released TPUv3 at the time I'm writing
 						
 					\paragraph{FPGA}
-						Good ol' Field Programmable Gate Array circuits are still used to enhance performance in custom computational oriented architectures (apple afterburner...). These circuits are somewhat "fully customizable" hardware computers that if programmed in a very specific way can enhance \emph{every kind} of possible computation. 
+						Good ol' Field Programmable Gate Array circuits are still used to enhance performance in custom computational oriented architectures. These circuits are somewhat "fully customizable" hardware computers that if programmed in a very specific way can enhance \emph{every kind} of possible computation. 
 			
 			\subsection{Storage}
 				Storage. Not much more. Technologies involved: HDDs and SSDs and Flash memory. Performance (and relevant) parameters:
@@ -88,25 +111,17 @@
 				
 				\subsubsection{Storage Systems - DAS, NAS, SAN}
 					\begin{itemize}
-						\item Direct Attached Storage is every device that offers storage capabilities and is directly attached to the unit processing such data in the storage. HDDs are DAS for personal computers, for example. They're directly accessible from the OS of the machine accessing it.
-						\item Network Attached Storage is a storage system that lies \emph{on the other end} of a network. A NAS only offers data services accessible from dedicated protocols (as FTP, SAMBA) and it's \emph{an actual computer} that offers services.
-						\item Storage Area Network is like NAS, but the remote storage unit are \emph{passive} and are directly accessible by the OS (by means still of a network connection). They're \emph{remotely accessed simple storage devices}.
+						\item Direct Attached Storage is every device that offers storage capabilities and is directly attached to the unit processing such data in the storage. HDDs are DAS for personal computers, for example. They're directly accessible from the OS of the machine accessing it. They're difficult to scale. They are difficult to manage when particular storage solutions are needed. Moreover, the OS's proprietary file sharing model / protocol / software must be used in order to share files with other machines.
+						\item Network Attached Storage is a storage system that lies \emph{on the other end} of a network. A NAS only offers data services accessible from dedicated protocols (as FTP, SAMBA) and it's \emph{an actual computer} that offers services. A NAS is a \emph{full fledged computer} that's \emph{only meant for storage services}, accessible through network protocols. It's located somewhere in the network. It's easily scalable (both augmenting the storage of a single NAS or multiplying the NAS number work).
+						\item Storage Area Network is like NAS, but the remote storage unit are \emph{passive} and are directly accessible by the OS (by means still of a network connection). They're \emph{remotely accessed simple storage devices}. Disks are visible \emph{like local storage, like DAS} to the server machina, but they're network attached. They have specialize hardware that mask the network in between, and the SAN can be accessed \emph{directly through the filesystem}. 
 					\end{itemize}
-					\begin{figure}
+					\begin{figure}[H]
 						\centering
 						\includegraphics[width = \textwidth]{./images/storage.png}
 					\end{figure}
 					
-					\paragraph{DAS}
-						Traditional attached local storage systems. They're difficult to scale. They are difficult to manage when particular storage solutions are needed. Moreover, the OS's proprietary file sharing model / protocol / software must be used in order to share files.
-						
-					\paragraph{NAS}
-						A NAS is a \emph{full fledged computer} that's \emph{only meant for storage services}, accessible through network protocols. It's located somewhere in the network. It's easily scalable (both augmenting the storage of a single NAS or multiplying the NAS number work).
-					
-					\paragraph{SAN}
-						Disks are visible \emph{like local storage, like DAS} to the server machina, but they're network attached. They have specialize hardware that mask the network in between, and the SAN can be accessed \emph{directly through the filesystem}. 
-				
 			\subsection{Networking}
+				Design a network architecture for a WSC ain't easy job. Moreover, the actual networking technologies haven't a straightforward horizontal scaling solution. This means that the \emph{the number of connections needed increases exponentially with the number of clients}, except for some clever solutions, if we are looking for a capillar connectivity. And, ina WSC, we are. Our aim is to provide additional \underline{bisection bandwidth}, that's the bandwidth available between two partitions of the network.\\ 
 				A WSC networking system can be divided in 2 separate blocks:
 				\begin{itemize}
 					\item an internal LAN that connects all the components (the servers) among themselves
@@ -120,12 +135,18 @@
 					\item Aggregation: this level groups the servers together (VLAN-like) and it's usually implemented as Top Of the Rack switches, that group together all the server in a aisle (for example).
 					\item Core: furthest level from the single server, aggregates entities of the "aggregation" level.
 				\end{enumerate}
+				Many network topologies are out there:
+				\begin{enumerate}
+					\item Fat tree (classic hierarchical topology, clearly visible access aggregation and core levels
+					\item D-Cell, recursive topology. Cells are organized in levels and the network "builds itself" through a discover mechanism
+					\item Hypercube topologies
+				\end{enumerate}
 				
 			\subsection{Building and Non-IT Equipment}
 				The way in which the hardware is arranged \emph{inside} a DC is as crucial as the building composing the DC itself, as well as the non-IT instruments (like the cooling system, or the energy system) that completes the DC structure.\\
 				
 				\subsubsection{Energy System}
-					Powering a DC is difficult on many layers; first of all, computing infrastructures of this scale need a lot of energy, but this energy must be provided steadily and must be always available. Moreover, the power must not be subject to cuts, improvised shortages or outing. So not only the energy system of a DC must handle a lot of power, but should also handle it \emph{with care}. Usually, DCs have a UPS that does al this work.
+					Powering a DC is difficult on many layers; first of all, computing infrastructures of this scale need a lot of energy, but this energy must be provided steadily and must be always available. Moreover, the power must not be subject to cuts, improvised shortages or outing. So not only the energy system of a DC must handle a lot of power, but should also handle it \emph{with care}. Usually, DCs have a UPS that does all this work.
 					
 					\paragraph{The UPS}
 						The Uninterruptible Power System is the hearth of the energy subsystem of a datacenter. It is composed of 3 main parts:
@@ -142,12 +163,20 @@
 					\begin{itemize}
 						\item Open loop: the fresh air is "sucked in" from the outside and then passively heated by the servers themselves. The hot air exhaust is let flow out from the top. In fact, this is a open-the-windows approach. Obviously this approach is very easy to set up, and requires little to no additional hardware (the additional hardware can be needed to cool down the air intake, or speed up the airflow, controlling humidity...) and can perform very well for its cost. Being so simple, it has its drawbacks: it depends from the outside temperature, the air flow is "uncontrolled"...
 						\item Closed loop: this approach is more similar to the personal computer's one. Heat is removed from the hardware and then the medium used to remove it is chilled in another place. Why closed? Because it does not depends on external air / chiller medium to refrigerate a room. Instead, the medium is chilled in a heat exchanger (usually located in a dedicated CRAC room) and then reinsterded in the loop. Multiple loop can be exploited in order to enhance the control over the heat transfer.
-						\item In rack cooling: manufacturers of server racks can add a device that acts as a heat exchanger (inparticular, generally it's a air to water exchanger) that sucks out the out directly from the servers.
+						\item In rack cooling: manufacturers of server racks can add a device that acts as a heat exchanger (in particular, generally it's a air to water exchanger) that sucks out the out directly from the servers.
 						\item In row cooling: as in rack cooling, just done at row level.
 						\item Circuit cooling: as in a personal PC, we can directly cool down circuitery (usually with liquid cooling systems) and this approach offers the most elevated performaces. However, liquid circuitery cooling system are hard to manage, other than inpractical.
 					\end{itemize}
+					
+				\subsubsection{DCs Tiers}
+					Availability of a DC is expressed on a scale, from one to four, that depends on a set of fixed parameters. Here's the table:
+					\begin{figure}[H]
+						\centering
+						\includegraphics[width = \textwidth]{./images/tiers.png}
+						\caption{DC tiers}
+					\end{figure}
 
-	\part{Software Infrastructure}
+	\clearpage \part{Software Infrastructure}
 		\section{Virtualization}
 			Virtualization is the procedure of "making a resource available through software artifacts". This resource can range from a particular kind of processor to a whole application set or service. Virtualization is the main technology enabling cloud computing, because of the flexibility mainly, the isolation and the security offered. Server VMs are implemented without using a host OSs as the personal computer one, they rely instead on a virtual machine monitor (like HyperVisor) that manages the hardware to run multiple VMs at the same time.
 			
@@ -230,7 +259,7 @@
 			\subsection{Edge and Fog Computing}
 				Edge and fog computing are two "emerging" paradigms that exploits intelligence at the edge of the network (of sensors, of data hotspots ecc) in order to provide faster communications and services.
 			
-	\part{Methods}
+	\clearpage \part{Methods}
 		\section{HDD and RAID Technologies}
 			Memory and files in disks are organized in clusters to simplify the management of the data. We have:
 			\begin{equation}
@@ -495,7 +524,7 @@
 					\includegraphics[width = \textwidth]{./images/superSummary2.png}
 				\end{figure}
 				
-	\part{Dependability}
+	\clearpage \part{Dependability}
 		\section{Probabilistic approach}
 			Dependability represents the \emph{availability performance} of a system. It encompasses 
 			\begin{itemize}
