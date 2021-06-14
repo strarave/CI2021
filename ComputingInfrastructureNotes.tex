@@ -252,7 +252,7 @@
 					PaaS is aimed towards developers. Cloud providers make available \emph{developing frameworks and platforms} to ease developing applications (like Colab, the ML engine by Google) and the cloud machine "just" have to provide libraries, hardware and APIs that are necessary in the developing process.
 				
 				\subsubsection{Infrastructure, Data and Communication as a Service}
-					IaaS, DaaS and CaaS are three approaches to "simplify your design through services" possibilities. A company can decide to use a DaaS system in order to organize data (this is a full \emph{outsource decision}) to not have the burden of manage a fuckton\footnote{yes it's a technical term.} of data. IaaS provides the \emph{computational resources}, maybe to make computational-intensive processes easier (without having to develop the entire app in the outsourced system though). DaaS provides online data: as the aformentioned example, a company that outsource the data to a DaaS provider gains full management of data (so backup, security, integrity, availability) through a web application. CaaS represents a bunch of systems \emph{provided usually as a web service} that provides the communication mechanism for companies. 
+					IaaS, DaaS and CaaS are three approaches to "simplify your design through services" possibilities. A company can decide to use a DaaS system in order to organize data (this is a full \emph{outsource decision}) to not have the burden of manage a fuckton\footnote{Yes it's a technical term.} of data. IaaS provides the \emph{computational resources}, maybe to make computational-intensive processes easier (without having to develop the entire app in the outsourced system though). DaaS provides online data: as the aformentioned example, a company that outsource the data to a DaaS provider gains full management of data (so backup, security, integrity, availability) through a web application. CaaS represents a bunch of systems \emph{provided usually as a web service} that provides the communication mechanism for companies. 
 				
 			\subsection{Cloud Systems Taxonomy}
 				\begin{itemize}
@@ -390,7 +390,7 @@
 						Arrivals represent the clients of a system. In a network, they can come from either an external source, from another service station, or from the service station that they've just used (loop back arc).
 						
 					\paragraph{Services}
-						Servers provide services. They can "hold" a client\footnote{the amount of time it holds a client is a parameter to be taken into consideration when evaluating performance} until the job is done, then they pass to the next element in the queue.
+						Servers provide services. They can "hold" a client until the job is done, then they pass to the next element in the queue.
 						
 					\paragraph{Queue}
 						The queues represent the buffer of clients before servers. When a client leaves the server, another one from the queue is selected \emph{according to the queuing policy}.
@@ -418,43 +418,50 @@
 					\item The visits to each station V
 				\end{itemize}
 				We can already derive some operational laws:
-				\begin{equation}
-					\begin{cases}
-						\lambda = \frac{A}{T} \\
-						X = \frac{C}{T} \\
-						U = \frac{B}{T} \\
-						S = \frac{B}{C}
-					\end{cases}
-				\end{equation}
-				Representing the arrival rate, the throughput, the utilisation and the mean service time. Notice that these laws can refer the whole system or the single service station.\\
-				We direct our experiments on the model in order to have $\lambda = X$, also called "job flow balance" condition.
+				\begin{center}
+					\begin{tabular}{ | c | c |}
+						\hline
+						$ \lambda = \frac{A}{T} $ & Arrival rate \\
+						$ X = \frac{C}{T} $ & Throughput \\
+						$ U = \frac{B}{T} $ & Utilization time \\
+						$ S = \frac{B}{C} $ & Mean service time\\
+						\hline
+					\end{tabular}
+				\end{center}
+
+				Notice that these laws can refer the whole system or the single service station. We direct our experiments on the model in order to have $\lambda = X$, also called "job flow balance" condition.\\
+				From now on, if an property has a pedix, it's indicating that property (or operational law) of a particular service station or subsystem. Also, we need to introduce a new property if we're talking about single service station: this is $N$, the number of jobs in the \emph{whole service station}\footnote{so queuing + served}.
 				
 				\paragraph{Utilization Law}
 					From literally one substitution we can derive the so called utilization law:
 					\begin{equation}
 						U_k = X_k \,\times\, S_k
 					\end{equation} 
-					Where the "k" is the identifier for a single resource/service station in the system. This law expresses the "occupational fraction" of a station, so how much a station is busy. Expressed in words, it's the rate of arrival of requests times the time needed to carry out one of them. It's easy to notice how, if this value is greater than one, the queue will grow in time.
+					This law expresses the "occupational fraction" of a station, so how much a station is busy. Expressed in words, it's the rate of arrival of requests times the time needed to carry out one of them. It's easy to notice how, if this value is greater than one, the queue will grow in time.
 					
 				\paragraph{Little Law}
 					The Little's law (or result, or lemma) states
 					\begin{equation}
 						N = X \,\times\,R
 					\end{equation}
-					So \emph{the number of requests in the system is equal to the throughput multiplied by the average time R a request spends in the system}. Dimensionally: X is requests over time while R is time $\Rightarrow$ N is requests.
+					So \emph{the number of requests in the system is equal to the throughput multiplied by the average time R a request spends in the system}.
 					
+				\paragraph{Interactive Response Time}
+					When measuring performance in an interactive system, we must also model in some way how the user behave in front of the system itself. To do so, we introduce \emph{think time} Z and we redefine N as $N = X \,\times\, (R + Z) $.
+
 				\paragraph{Forced Flow Law}
 					The FFL is another operational law that binds the the throughput of the entire system to the throughput of the single service stations.
 					\begin{equation}
 						X_k = V_k \,\times\, X
 					\end{equation}
-					Where V is the visit count for the particular service station k, defined as $\frac{C_k}{C}$ so the fractions of completions of a single service station. Visit count is important when related to total completions: when $V_k$ is greater than one, the number of completions at system level corresponds to a higher number of visits to the single service station.  
+					Where $V_k$ is the visit count for the particular service station k, defined as $\frac{C_k}{C}$ so the fractions of completions of a single service station. Visit count is important when related to total completions: when $V_k$ is greater than one, the number of completions at system level corresponds to a higher number of visits to the single service station.\\
 					
 				\paragraph{Service Demand}
 					The service demand represents the amount (in time) of service asked \emph{to a specific service station}. It's computed as
 					\begin{equation}
 						D_k = S_k \,\times\, V_k
 					\end{equation}
+					Remember: Service Time $\neq$ Residence Time. 
 					
 				\paragraph{Residence and Response Time}
 					The response time $\tilde{R}$ is the time spent by a job in a service station, counting the queue time. The residence time instead is the time spent by a job in a service station \emph{during all system time}: so accounting for the loops and reiteration. The pretty straightforward relation is $R_k = V_k \,\times\, \tilde{R}$, that's the same relationship between Demand and Service Time. 
@@ -465,24 +472,16 @@
 						R = \sum_k (V_k \,\times\, \tilde{R_k}) = \sum_k (R_k)
 					\end{equation}
 					
-				\subsubsection{Math Stuff}
-					Putting all together, we can derive the utilization law for a single service station as:
-					\begin{equation}
-						U_k = 
-						\begin{cases}
-							X_k \,\times\, S_k \\
-							(X \,\times\, V_k) \,\times\,S_k \\
-							D_k \,\times\, X
-						\end{cases}
-					\end{equation}
-					
 				\subsubsection{SUMMARY}
-					\begin{figure}
-						\centering
-						\includegraphics[width = \textwidth]{./images/superSummary1.png}
-						\caption{Super Summary of the formulas seen in this chapter.}
-					\end{figure}
-					
+					Ok so, we've seen some confusing stuff so far. Let's put all together in a nice table.
+					\begin{center}
+						\begin{tabular}{ | c || c | c | }
+							Name & Letter & Formula \\
+							\hline
+							\hline
+
+						\end{tabular}
+					\end{center}
 		\section{Performance Asymptotic Bounds}
 			Performance bounds are the asymptotic values that our figures of merit can reach in a system. These can be useful in the modeling process to find the element that impact the most the performances, among the others the bottlenecks. Asymptotic analysis provides optimistic and pessimistic bounds on two major performance indexes: throughput X and response time R.
 			
