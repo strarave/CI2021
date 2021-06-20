@@ -1,9 +1,12 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass{article}
 
+\usepackage{multirow}
+\usepackage{longtable}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{array}
+\usepackage[a4paper, total={15cm, 24.5cm}]{geometry}
 
 \title{Computing Infrastructure}
 \author{Elia Ravella}
@@ -475,13 +478,48 @@
 				\subsubsection{SUMMARY}
 					Ok so, we've seen some confusing stuff so far. Let's put all together in a nice table.
 					\begin{center}
-						\begin{tabular}{ | c || c | c | }
+						\begin{longtable}{ | m{0.4\textwidth} || m{0.2\textwidth} | m{0.2\textwidth} | }
+							\hline
 							Name & Letter & Formula \\
 							\hline
 							\hline
-
-						\end{tabular}
+							Number of arrivals & A & \textbackslash \\
+							\hline
+							Number of completions & C & \textbackslash \\
+							\hline
+							Busy time & B & \textbackslash \\
+							\hline
+							Average number of jobs in the system & N & \textbackslash \\
+							\hline
+							Observation time & T & \textbackslash \\
+							\hline
+							Visit to each station & V & \textbackslash \\
+							\hline
+							Think time & Z & \textbackslash \\
+							\hline
+							Arrival rate & $\lambda$ & $\frac{A}{T}$ \\
+							\hline
+							Throughput & X & $\frac{C}{T}$ \\
+							\hline
+							Utilization time & U & $\frac{B}{T}$ \\
+							\hline
+							Mean service time & S & $\frac{B}{C}$ \\
+							\hline
+							Utilization law & \textbackslash & $ U_j = X_k \,\times\, S_k$ \\
+							\hline
+							Little's law & \textbackslash & $ N = X \,\times\, R $ \\
+							\hline
+							Little's law, interactive response time & \textbackslash & $ N = X \,\times\,(R+Z) $ \\
+							\hline
+							Forced flow law & \textbackslash & $ X_k = V_k \,\times\, X $ \\
+							\hline
+							Service demand & \textbackslash & $ D_k = S_k \,\times\, V_k $ \\
+							\hline
+							General Response Time Law & \textbackslash & $ R = \sum_k(R_k) $ \\
+							\hline
+						\end{longtable}
 					\end{center}
+
 		\section{Performance Asymptotic Bounds}
 			Performance bounds are the asymptotic values that our figures of merit can reach in a system. These can be useful in the modeling process to find the element that impact the most the performances, among the others the bottlenecks. Asymptotic analysis provides optimistic and pessimistic bounds on two major performance indexes: throughput X and response time R.
 			
@@ -499,32 +537,47 @@
 					\item Pessimistc scenarios, viceversa: throughput lower bound and maximum values of response time
 				\end{itemize}
 			
-			\subsection{Open Models}
-				We can analyze both X and R at the extreme scenarios. X would have only an upper bound, while R only a lower one.
-				\begin{equation}
-					\begin{cases}
-						X(\lambda) \,\leq\, \frac{1}{D_{max}}\\
-						R(\lambda) \,\geq\, D
-					\end{cases}
-				\end{equation}
-				Where $\lambda$ is the arrival rate of requests.
-				
-			\subsection{Closed Models}
-				Closed models enjoy the property to have a \emph{constant number of customers}. This renders very easy to calculate the bounds of performance.\\
-				Usually, the bounds on throughput are considered first, then are transformed into bounds on response time though Little's law. We have two scenarios:
-				
-				\paragraph{Light Load Scenarios}
-					In light load scenarios, the bounds on throughput can be calculated as:
-					\begin{equation}
-						\begin{cases}
-							X(\lambda) \,\geq\, \frac{N}{ND + Z}\\
-							X(\lambda) \,\leq\, \frac{N}{D + Z}
-						\end{cases}
-					\end{equation}
-				
-				
+			\subsection{Tables of Formmulae}
+				Bounds for throughput
+				\begin{longtable}{ m{0.1\textwidth} | m{0.45\textwidth} | m{0.45\textwidth} |}
+					& Open Systems & Closed Systems \\
+					\hline
+					Light Load & \multirow{2}{0.3\textwidth}{ 
+						\begin{equation}
+							X(\lambda) \leq \frac{1}{D_{max}}
+						\end{equation}
+					} &  
+						\begin{equation}
+							\frac{N}{ND + Z} \leq X \leq \frac{N}{D + Z}
+						\end{equation}
+					\\
+					Heavy Load & & 
+						\begin{equation}
+							\frac{N}{ND + Z} \leq X \leq min(\frac{N}{D + Z}, \frac{1}{D_{max}})
+						\end{equation}
+					\\
+					\hline					
+				\end{longtable}
+				Bounds for response time:
+				\begin{longtable}{ m{0.1\textwidth} | m{0.45\textwidth} | m{0.45\textwidth} |}
+					& Open Systems & Closed Systems \\
+					\hline
+					Light Load & \multirow{2}{0.3\textwidth}{ 
+						\begin{equation}
+							R \geq \frac{1}{D_{max}}
+						\end{equation}
+					} & \multirow{2}{0.3\textwidth}{
+						\begin{equation}
+							max(D_{max}, ND_{max}-Z) \leq R \leq ND
+						\end{equation}
+					}
+					\\
+					Heavy Load & & \\
+					\hline					
+				\end{longtable}
+
 			\subsection{SUMMARY}	
-				\begin{figure}
+				\begin{figure}[H]
 					\centering
 					\includegraphics[width = \textwidth]{./images/superSummary2.png}
 				\end{figure}
@@ -543,7 +596,7 @@
 			Probabilistics recall:
 
 			\begin{align}
-				f(t) \rightarrow \text{ probabilistic distribution}\\
+				f(t) \rightarrow \text{ probabilistic distribution of failure}\\
 				F(t) = \int_{0}^{t}f(t)dt \rightarrow \text{ cumulative function, unreliability}\\
 				R(t) = 1 - F(t) \rightarrow \text{ reliability function}
 			\end{align}
@@ -602,32 +655,34 @@
 						\begin{cases}
 							F(t) = 1 - e^{-\lambda t} \\
 							f(t) = \lambda e^{-\lambda t} \\
-							MTTF = \int_{0}^{\infty} t\cdot \lambda e^{-\lambda t} dt = \frac{1}{\lambda}\\
+							MTTF = \int_{0}^{\infty} t\cdot \lambda e^{-\lambda t} dt = \frac{1}{\lambda} \,\Rightarrow\, \lambda = \frac{1}{}
 						\end{cases}
 					\end{equation}
 					So we can express the reliability as function of MTTF: $R(t) = e^{-\frac{t}{MTTF}}$. And we all know that in certain conditions (like $\frac{t}{MTTF} << 1$) an exponential function can be approximated to a linear function.
 
 			\subsection{System level reliability}
 				We can model the system relibility mainly with RBDs: Reliability Block Diagram. These simply outline the operational dependency between components. The main assumption of the RBD is that the failures are \emph{indipendent}, that implies that are no "cascading failures".\\
-				It's easy to calculate the overall reliability:
+				General formulae for the Reliability of systems:
 				\begin{equation}
 					\begin{cases}
 						\text{Serial components: } R_s(t) = \prod_{i=1}^{n}R_i(t)\\
 						\text{Parallel components: } R_p(t) = 1 - \prod_{i=1}^{n} (1-R_i(t))
 					\end{cases}
 				\end{equation}
-				The MTTF is also altered from the serialization or parallelization of components. In particular, in a serie with n identical components, $MTTF_{serie} = \frac{MTTF}{n}$. The general formula is the one used for parallel resistors:
+
+				\paragraph{System's MTTF}	
+				We can redefine the mean time to failure to cover the complex systems, keeping in mind the two configurations we use: serial or parallel components.
 				\begin{equation}
-					MTTF_{serie} = \frac{1}{\sum_{i=1}^{n}(\frac{1}{MTTF_i})}
+					\begin{cases}
+						\text{Serial components: } MTTF_s = \frac{1}{\sum_{i = 1}^{n}(\frac{1}{MTTF_i})} \\
+						\text{Serial \emph{identical} components: } MTTF_{ss} = \frac{MTTF}{n} \\
+						\text{Parallel components: } MTTF_p = \sum_{i = 1}^{n}(MTTF_i) - MTTF_s \\
+						\text{Parallel \emph{identical} components: } MTTF_{pp} = MTTF_i * (\sum_{i = 1}^{n - 1} (\frac{1}{n - i}))
+					\end{cases}
 				\end{equation}
-				For parallel system, things get complicated. The MTTF is calculated from the unreliability, integrating between 0 and $\infty$. The resulting formula is
-				\begin{equation}
-					MTTF_{parallel} = \sum_{i=1}^{n}(MTTF_i) - \frac{1}{\sum_{i=1}^{n}(\frac{1}{MTTF_i})}
-				\end{equation}
-				Notice that the second term of that sum is exactly $MTTF_{serie}$ of that configuration. Again, the formula can be simplified if the components are identical: $MTTF_{parallel identical} = MTTF_i*(\sum_{i=1}^{n-1}(\frac{1}{n-i}))$\\
-				
-				\paragraph{Extension of MTTF calculation to complex systems}
-					We can apply the calculation of the \emph{reliability} of a complex systems directly with the formulas, but the same cannot be done with MTTF. This is due to the fact that a complex system has not anymore a simple failure rate distribution, and this messes up the MTTF calculation, that's an integral on that function. So, I must pass through the reliability calculation.
+
+				\paragraph{Disclaimer}
+				MTTF is an \textit{integral measured value}, it must be handled with care when the number of components and links grow. The perfect workflow is to fix unreliability, then calculate reliability\footnote{additional step, not always needed}, derive to obtain $f(t)$, then \textit{at the end} derive MTTF as expected value of $f(t)$.
 
 			\subsection{Availability}
 				Introducing MTTR, Mean Time To Repair. This represents the average time required to replace a failed component and "bring the system back up" after a failure. It can be the restart time (for software module) or the replace time (for an hardware component).\\
@@ -635,18 +690,15 @@
 				\begin{equation}
 					Availability = \frac{MTTF}{MTTF+MTTR}
 				\end{equation}
-				The slight difference between availability and reliability takes into consideration the repairing of a system in the case it goes down. The availability function is calculated with \emph{the same identical formulas} used to calculate the reliability for parallel and serial components.\\
+				The slight difference between availability and reliability takes into consideration the repairing of a system in the case it goes down. The availability function is calculated with \emph{the same identical formulas} used to calculate the reliability for parallel and serial components:
+				\begin{equation}
+					\begin{cases}
+						\text{Serial components: } A_s = \prod_{i = 1}^n A_i \\
+						\text{Parallel components: } A_p = 1 - \prod_{i = 1}^n (1 - A_i)
+					\end{cases}
+				\end{equation}
 				Talking about MTTF when taking into consideration that components can be \emph{repaired} must be carefully handled: for example, if a parallel system has \emph{interleaving} failures, it never fails enitrely. A way of calculating MTTF for repairable system consists in inverting formula (9), obtaining
 				\begin{equation}
 					MTTF = \frac{Av*MTTR}{1-Av}
 				\end{equation}
-
-
-
-
-
-
-
-
-
 \end{document}
