@@ -299,7 +299,12 @@
 					\begin{equation}
 						T_{read} = T_{rotate} + T_{seek} + T_{transfer} + T_{overhead}
 					\end{equation}
-					Usually, the transfer speed is usually given as transfer ratio $\frac{MB}{sec}$. 
+					Usually, the transfer speed is usually given as transfer ratio $\frac{MB}{sec}$.\\
+					Remember: "data locality" (that can be seen as the opposite of fragmentation, in a sense) impact heavily on the total IO time: in fact, the seek time and rotational delay should be calculated only for the blocks that actually need those. The new formula become:
+					\begin{equation}
+						T_{read} = (1 - locality\, fraction)*(T_{rotate} + T_{seek}) + T_{transfer} + T_{overhead}
+					\end{equation}
+					Another plausible assumption is to nullify the total overhead needed.
 					
 					\paragraph{Reducing Latency}
 						Caching is the most used mechanism to make data available \emph{faster} in order to reduce latency. Usually, at hardware level, the cache is implemented by means of a phisycal additional RAM memory built directly in the HDD.
@@ -320,7 +325,7 @@
 				Redundant Array of Inexpensive Disks is a technology that exploits the parallelization of I/O bus to multiple disks in order to enhance security, write and read speed, and fault tolerance. Data are copied / distributed on multiple disks, that are presented to the OS as a single one. There are 6 (or 8) different raid configurations:
 				
 				\subsubsection{RAID 0}
-					Data is just striped across disks. This is achieved by splitting the request to all the disks in the array. No data is replicated. RAID 0 provides high read/write speed, but worsen the reliability of the whole system: multiple disks + no backup (redundancy) options jeopardize reliability.
+					Data is just striped across disks. This is achieved by splitting the request to all the disks in the array. No data is replicated. RAID 0 provides high read/write speed, but worsen the reliability of the whole system: multiple disks + no backup (redundancy) options jeopardize reliability. It's by far the fastest configuration though.
 					
 				\subsubsection{RAID 1}
 					Data is mirrored. On two disks, the same copy of data is stored. This improves read speed (you can split the read of blocks) but worsen capacity and write speed. Obviously, reliability is increased. On more than 2 disks (where the mirroring is quite straightforward) raid 1 and 0 can be combined:
@@ -335,7 +340,7 @@
 					
 				
 				\subsubsection{RAID 4}
-					RAID 4 delegates and entire disk of the array to storing parity bits (calculated by XORRING all the bits in the other disks in that position). The parity bits allows to \emph{reconstruct data} when a single disk fails, because we can XOR back the parity configuration and rebuild the data. This comes at a cost in writes, especially in random ones: updating the parity bits (that are all on the same disk $\Rightarrow$ they cannot be parallelized) costs a lot if the writes are not sequential or not in the same XORRED stripe. 
+				RAID 4 delegates and entire disk of the array to storing parity bits (calculated by XORRING all the bits in the other disks in that position). The parity bits allows to \emph{reconstruct data} when a single disk fails, because we can XOR back the parity configuration and rebuild the data. This comes at a cost in writes, especially in random ones: updating the parity bits (that are all on the same disk $\Rightarrow$ they cannot be parallelized) costs a lot if the writes are not sequential or not in the same XORRED stripe. The rest of the data is striped across the other disks. This configuration works better on a \textit{odd} number of disks, due to the "extra" one to dedicate to the parity bits.
 				
 				\subsubsection{RAID 5}
 					Why should I accumulate all the parity bits in a single disk? RAID 5 overcomes the limits of RAID 4 by \emph{striping} across the array the parity blocks. This still reduces the capacity of the array \emph{by one entire disk}, but the random writes speed up (you can now parallelize parity writes).\\
@@ -348,7 +353,15 @@
 						\centering
 						\includegraphics[width = \textwidth]{./images/raids.png}
 					\end{figure}
-		
+					Where, more specifically:
+					\begin{equation}
+						\begin{cases}
+							\text{Random transfer rate } R = \frac{transfer\, size}{time\, to\, access}\\
+							\text{Sequential transfer rate } S = \frac{transfer\, size}{time\, to\, access}
+						\end{cases}
+					\end{equation}
+					The difference between the two is the way the operations are actually issued on the disk.
+
 		\section{Performance}
 			\subsection{What is Performance?}
 				Classic engineering question: how much did I do well? How do I measure, evaluate the goodness of my job? What's the most adapt figure of merit? How do I abstract enough from the reality in order to design the right solution (modeling problem)?
