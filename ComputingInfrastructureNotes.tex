@@ -518,7 +518,7 @@
 							\hline
 							Mean service time & S & $\frac{B}{C}$ \\
 							\hline
-							Utilization law & \textbackslash & $ U_j = X_k \,\times\, S_k$ \\
+							Utilization law & \textbackslash & $ U_k = X_k \,\times\, S_k$ or $U_k = D_k \,\times\, X$\footnote{it actually makes sense, look next formulae} \\
 							\hline
 							Little's law & \textbackslash & $ N = X \,\times\, R $ \\
 							\hline
@@ -550,7 +550,7 @@
 					\item Pessimistc scenarios, viceversa: throughput lower bound and maximum values of response time
 				\end{itemize}
 			
-			\subsection{Tables of Formmulae}
+			\subsection{Tables of Formulae}
 				Bounds for throughput
 				\begin{longtable}{ m{0.1\textwidth} | m{0.45\textwidth} | m{0.45\textwidth} |}
 					& Open Systems & Closed Systems \\
@@ -581,7 +581,7 @@
 						\end{equation}
 					} & \multirow{2}{0.3\textwidth}{
 						\begin{equation}
-							max(D_{max}, ND_{max}-Z) \leq R \leq ND
+							max(D, ND_{max}-Z) \leq R \leq ND
 						\end{equation}
 					}
 					\\
