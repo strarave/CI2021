@@ -40,7 +40,7 @@
 				The CONS of a DC can be found simply inverting the POV for the PROS aspects: outsourcing resources gives "someone else" the control over some crucial aspects of a CI. This is a good thing when costs (also time costs) must be reduced, but can be a bad thing when a fine grained control over a full system is needed. Also, \emph{latency} pops in, due to the needed connection to the DC.
 				
 			\subsection{DCs ans WSCs}
-				The data center approach has been emerging in the last years. The idea behind it is that we should not "overpack" nodes of a network with all the computing capabilities required, but instead giving them a connection to such CIs. Data centers are the perfect example for this paradigm: the user interact with a client (that can be \emph{any kind of device}) that also interact with a remote structure to provide computations. To a careful watch, SaaS and their spread are a direct conseguence of this paradigm shift. Another use of DCs is using their computing capabilities not in a fragmented way to provide miriads of services, but to perform an \emph{extremely costly computation}, like a training of a neural network.\\
+				The data center approach has been emerging in the last years. The idea behind it is that we should not "overpack" nodes of a network with all the computing capabilities required, but instead giving them a connection to such CIs. Data centers are the perfect example for this paradigm: the user interact with a client (that can be \emph{any kind of device}) that also interact with a remote structure to provide computations. To a careful watch, SaaS and their spread are a direct conseguence of this paradigm shift. Another use of DCs is using their computing capabilities not in a fragmented way to provide miryads of services, but to perform an \emph{extremely costly computation}, like a training of a neural network.\\
 				From a DC approach we are moving to Warehouse Scale Computers nowadays. This latter approach consists of NOT "mixing up the pot" in a DC (so having a lot of heterogeneous technologies in order to achieve different tasks) but instead to "homogeneify" the cloud structure in order to do better optimization of it. Not only in the HW, but also in the SW. To centralize the DC capabilities under a single organization (as often happens) means that clients no more run their application on someone else's hardware, but instead choose from a set of precooked solutions by such vendor/organization. Is this \emph{bad}? WSCs are just a "SaaS - oriented" Data Center Architectures, so \emph{there's no real transition between DCs and WCSs} the only transition is in the number of \emph{virtualiazed layers the client must go through to access an application}.\\
 				We can sum up the difference between DCs and WSCs in this way: where DCs are intended as a powerful collection of different servers, WSCs tries to offer a homogeneous interface that can be used also as a single server to such a collection of hardware. Still, if we consider a larger definition for DCs, WSCs are a type of DCs. 
 				\begin{figure}[H]
@@ -73,7 +73,7 @@
 				\begin{itemize}
 					\item Towers: cheap, cooling is easy, upgrade is easy. They're also big, and they provide low density of computational power.
 					\item Blades: also called hybrid racks, the idea is similar to the rack system, but a server is inserted \emph{vertically} instead of \emph{horizontally} in a dedicated place. This (together with the average smaller size of a blade server) enhances computation per volume ratio while keeping all the pros of a rack system. Blade servers have disadvantages: heat management is complex, and enclosures and envelops are more expensive wrt racks.
-					\item Racks: literal racks that host the pizza box shaped computational units, and accomodate all the wiring and additional connection or cooling systems. They can host also heterogeneus components, not only standard computational modules. Rack's dimension and geometry is a standard. Rack organization provides better failure handling and simplified cable management, but they're more power demanding (wrt towers) and mainteinance is a mess (mmultiple devices must be maintained at the same time).
+					\item Racks: literal racks that host the pizza box shaped computational units, and accomodate all the wiring and additional connection or cooling systems. They can host also heterogeneus components, not only standard computational modules. Rack's dimension and geometry is a standard. Rack organization provides better failure handling and simplified cable management, but they're more power demanding (wrt towers) and mainteinance is a mess (multiple devices must be maintained at the same time).
 				\end{itemize}
 				To sum up:
 				\begin{center}
@@ -116,7 +116,7 @@
 					\begin{itemize}
 						\item Direct Attached Storage is every device that offers storage capabilities and is directly attached to the unit processing such data in the storage. HDDs are DAS for personal computers, for example. They're directly accessible from the OS of the machine accessing it. They're difficult to scale. They are difficult to manage when particular storage solutions are needed. Moreover, the OS's proprietary file sharing model / protocol / software must be used in order to share files with other machines.
 						\item Network Attached Storage is a storage system that lies \emph{on the other end} of a network. A NAS only offers data services accessible from dedicated protocols (as FTP, SAMBA) and it's \emph{an actual computer} that offers services. A NAS is a \emph{full fledged computer} that's \emph{only meant for storage services}, accessible through network protocols. It's located somewhere in the network. It's easily scalable (both augmenting the storage of a single NAS or multiplying the NAS number work).
-						\item Storage Area Network is like NAS, but the remote storage unit are \emph{passive} and are directly accessible by the OS (by means still of a network connection). They're \emph{remotely accessed simple storage devices}. Disks are visible \emph{like local storage, like DAS} to the server machina, but they're network attached. They have specialize hardware that mask the network in between, and the SAN can be accessed \emph{directly through the filesystem}. 
+						\item Storage Area Network is like NAS, but the remote storage unit are \emph{passive} and are directly accessible by the OS (by means still of a network connection). They're \emph{remotely accessed simple storage devices}. Disks are visible \emph{like local storage, like DAS} to the server machine, but they're network attached. They have specialize hardware that mask the network in between, and the SAN can be accessed \emph{directly through the filesystem}. 
 					\end{itemize}
 					\begin{figure}[H]
 						\centering
@@ -124,7 +124,7 @@
 					\end{figure}
 					
 			\subsection{Networking}
-				Design a network architecture for a WSC ain't easy job. Moreover, the actual networking technologies haven't a straightforward horizontal scaling solution. This means that the \emph{the number of connections needed increases exponentially with the number of clients}, except for some clever solutions, if we are looking for a capillar connectivity. And, ina WSC, we are. Our aim is to provide additional \underline{bisection bandwidth}, that's the bandwidth available between two partitions of the network.\\ 
+				Design a network architecture for a WSC ain't easy job. Moreover, the actual networking technologies haven't a straightforward horizontal scaling solution. This means that the \emph{the number of connections needed increases exponentially with the number of clients}, except for some clever solutions, if we are looking for a capillar connectivity. And, in a WSC, we are. Our aim is to provide additional \underline{bisection bandwidth}, that's the bandwidth available between two partitions of the network.\\ 
 				A WSC networking system can be divided in 2 separate blocks:
 				\begin{itemize}
 					\item an internal LAN that connects all the components (the servers) among themselves
@@ -424,7 +424,7 @@
 			
 			\subsection{The Performance Estimation Process}
 				Once a model has been built (so in our case, a network of queuing processes) in order to evaluate the performance we have to parametrize the model itself and then estimate the performance indices. To do so, we must mathematically formalize how the model behaves: we can do such through the use of Operational Laws.\\
-				Operational laws are basically equations that usually represents the the averaged behaviour of each system. Operational laws are based on observable variables, that can be "read" from the system. For example, given our model, we can without effort observe the variables
+				Operational laws are basically equations that usually represents the averaged behaviour of each system. Operational laws are based on observable variables, that can be "read" from the system. For example, given our model, we can without effort observe the variables
 				\begin{itemize}
 					\item The number of arrivals A
 					\item The number of completions C
@@ -446,7 +446,7 @@
 				\end{center}
 
 				Notice that these laws can refer the whole system or the single service station. We direct our experiments on the model in order to have $\lambda = X$, also called "job flow balance" condition.\\
-				From now on, if an property has a pedix, it's indicating that property (or operational law) of a particular service station or subsystem. Also, we need to introduce a new property if we're talking about single service station: this is $N$, the number of jobs in the \emph{whole service station}\footnote{so queuing + served}.
+				From now on, if an property has a subscript, it's indicating that property (or operational law) of a particular service station or subsystem. Also, we need to introduce a new property if we're talking about single service station: this is $N$, the number of jobs in the \emph{whole service station}\footnote{so queuing + served}.
 				
 				\paragraph{Utilization Law}
 					From literally one substitution we can derive the so called utilization law:
@@ -466,7 +466,7 @@
 					When measuring performance in an interactive system, we must also model in some way how the user behave in front of the system itself. To do so, we introduce \emph{think time} Z and we redefine N as $N = X \,\times\, (R + Z) $.
 
 				\paragraph{Forced Flow Law}
-					The FFL is another operational law that binds the the throughput of the entire system to the throughput of the single service stations.
+					The FFL is another operational law that binds the throughput of the entire system to the throughput of the single service stations.
 					\begin{equation}
 						X_k = V_k \,\times\, X
 					\end{equation}
