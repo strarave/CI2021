@@ -23,7 +23,7 @@
 			What is a CI? A CI is a \emph{technological structure} that provides hardware and software for computation to other systems. This means a lot: is a joint (and heterogeneous) system that comprises both HW and SW to deliver several services. With CI is not intended the \emph{application delivered} but the combination of elements that makes the application available and running.\\
 			So everything in between a RaspPI that does torrent seeding from a local network to the whole datacenter that runs an AWS service can be considered a computing infrastructure.
 			
-	\clearpage \part{Hardware Infrastructures}
+	\part{Hardware Infrastructures}
 		\section{Data Centers}
 			\subsection{Pros and cons}
 				Data centers are big centralized CIs that comprise a lot of servers (to provide computations) a communication infrastructure, and a storage service.\\ 
@@ -72,8 +72,8 @@
 				Servers are the computational compartment of a WSC. They're organized in racks (shelves) that host the computational units (pizza box computer). Servers are just computers. That's all. They got a MOBO, local primary memory, a CPU, and I/O capabilities. They can be organized as
 				\begin{itemize}
 					\item Towers: cheap, cooling is easy, upgrade is easy. They're also big, and they provide low density of computational power.
-					\item Blades: also called hybrid racks, the idea is similar to the rack system, but a server is inserted \emph{vertically} instead of \emph{horizontally} in a dedicated place. This (together with the average smaller size of a blade server) enhances computation per volume ratio while keeping all the pros of a rack system. Blade servers have disadvantages: heat management is complex, and enclosures and envelops are more expensive wrt racks.
 					\item Racks: literal racks that host the pizza box shaped computational units, and accomodate all the wiring and additional connection or cooling systems. They can host also heterogeneus components, not only standard computational modules. Rack's dimension and geometry is a standard. Rack organization provides better failure handling and simplified cable management, but they're more power demanding (wrt towers) and mainteinance is a mess (multiple devices must be maintained at the same time).
+					\item Blades: also called hybrid racks, the idea is similar to the rack system, but a server is inserted \emph{vertically} instead of \emph{horizontally} in a dedicated place. This (together with the average smaller size of a blade server) enhances computation per volume ratio while keeping all the pros of a rack system. Blade servers have disadvantages: heat management is complex, and enclosures and envelops are more expensive wrt racks.
 				\end{itemize}
 				To sum up:
 				\begin{center}
@@ -453,7 +453,7 @@
 					\begin{equation}
 						U_k = X_k \,\times\, S_k
 					\end{equation} 
-					This law expresses the "occupational fraction" of a station, so how much a station is busy. Expressed in words, it's the rate of arrival of requests times the time needed to carry out one of them. It's easy to notice how, if this value is greater than one, the queue will grow in time.
+					This law expresses the "occupational fraction" of a station, so how much a station is busy. Expressed in words, it's the rate of completion of requests times the time needed to carry out one of them. It's easy to notice how, if this value is greater than one, the queue will grow in time.
 					
 				\paragraph{Little Law}
 					The Little's law (or result, or lemma) states
@@ -577,7 +577,7 @@
 					\hline
 					Light Load & \multirow{2}{0.3\textwidth}{ 
 						\begin{equation}
-							R \geq \frac{1}{D_{max}}
+							R \geq D
 						\end{equation}
 					} & \multirow{2}{0.3\textwidth}{
 						\begin{equation}
